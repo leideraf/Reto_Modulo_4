@@ -1,0 +1,305 @@
+# Academia – Módulo de colecciones y manipulación de datos
+
+Este proyecto representa un pequeño sistema de administración académica. Su propósito es centralizar datos de una academia y permitir su manipulación de forma organizada.
+
+Desde el punto de vista del módulo, el proyecto demuestra el uso de:
+
+- **colecciones de datos**, al trabajar con registros obtenidos desde base de datos y convertirlos en objetos del sistema;
+- **manipulación de datos**, al insertar, consultar, actualizar y eliminar información;
+- **modelado de entidades**, al separar la lógica en clases para estudiantes, docentes, cursos, horarios y matrículas;
+- **conexión entre capas**, usando una estructura basada en entrada principal, configuración, controladores y modelos.
+
+---
+
+## Objetivo del proyecto
+
+Desarrollar una aplicación que permita administrar la información de una academia de manera estructurada, facilitando el control de:
+
+- estudiantes registrados,
+- docentes disponibles,
+- cursos ofertados,
+- horarios asignados,
+- matrículas realizadas.
+
+Además, el proyecto busca aplicar buenas prácticas básicas de organización del código, separación por responsabilidades y manejo de base de datos relacional.
+
+---
+
+## Tecnologías utilizadas
+
+- **Python**: lenguaje principal del proyecto.
+- **Tkinter**: interfaz gráfica de escritorio.
+- **MySQL**: motor de base de datos relacional.
+- **mysql-connector-python**: librería para conectar Python con MySQL.
+- **SQL**: definición de tablas, relaciones e inserción de datos de prueba.
+
+---
+
+## Estructura del proyecto
+
+```bash
+Academia/
+├── academia/
+│   ├── main.py
+│   ├── .env
+│   ├── .gitignore
+│   ├── config/
+│   │   └── database.py
+│   ├── controllers/
+│   │   ├── curso_controller.py
+│   │   ├── docente_controller.py
+│   │   ├── estudiante_controller.py
+│   │   ├── horario_controller.py
+│   │   └── matricula_controller.py
+│   └── models/
+│       ├── curso.py
+│       ├── docente.py
+│       ├── estudiantes.py
+│       ├── horario.py
+│       └── matricula.py
+└── queries/
+    ├── academia.sql
+    ├── biblioteca.sql
+    └── estudiantes.sql
+```
+
+---
+
+## Explicación de la arquitectura
+
+### `main.py`
+Es el punto de entrada del sistema. Aquí se crea la conexión con la base de datos y se inicializa el menú principal de la interfaz gráfica. También se asegura el cierre de la conexión al finalizar la ejecución.
+
+### `config/database.py`
+Contiene la clase `Database`, encargada de gestionar la conexión con MySQL y de ejecutar consultas SQL. Centraliza tres responsabilidades principales:
+
+- abrir la conexión,
+- ejecutar consultas de modificación,
+- ejecutar consultas de lectura.
+
+También incluye un manejo básico de errores para fallos de integridad y ejecución.
+
+### `controllers/`
+Aquí se encuentra la lógica de negocio del sistema. Cada controlador se encarga de una entidad específica y contiene métodos para:
+
+- registrar,
+- listar,
+- buscar por ID,
+- actualizar,
+- eliminar.
+
+#### `estudiante_controller.py`
+Administra las operaciones CRUD de estudiantes.
+
+#### `docente_controller.py`
+Gestiona el registro y mantenimiento de docentes.
+
+#### `curso_controller.py`
+Controla la creación y consulta de cursos, incluyendo la relación con docentes.
+
+#### `horario_controller.py`
+Maneja los horarios asociados a los cursos.
+
+#### `matricula_controller.py`
+Administra las matrículas entre estudiantes y cursos.
+
+### `models/`
+Define las clases que representan cada entidad del sistema. Estas clases permiten trabajar los datos de forma más clara dentro de Python.
+
+#### `estudiantes.py`
+Modelo de estudiante.
+
+#### `docente.py`
+Modelo de docente.
+
+#### `curso.py`
+Modelo de curso.
+
+#### `horario.py`
+Modelo de horario.
+
+#### `matricula.py`
+Modelo de matrícula.
+
+### `queries/`
+Incluye scripts SQL de apoyo.
+
+#### `academia.sql`
+Script principal con la base de datos de la academia, creación de tablas e inserción de datos de prueba.
+
+#### `biblioteca.sql`
+Script adicional para otro ejercicio relacionado con biblioteca y préstamos.
+
+#### `estudiantes.sql`
+Script de ejemplo para una relación muchos a muchos entre estudiantes y cursos.
+
+---
+
+## Funcionalidades principales
+
+El sistema está orientado a la administración de información académica y permite trabajar con datos como si fueran colecciones organizadas por entidad.
+
+### Gestión de estudiantes
+- Registrar estudiantes.
+- Consultar listado de estudiantes.
+- Buscar un estudiante por su identificador.
+- Actualizar información existente.
+- Eliminar registros.
+
+### Gestión de docentes
+- Registrar docentes.
+- Consultar docentes registrados.
+- Editar datos personales y académicos.
+- Eliminar docentes.
+
+### Gestión de cursos
+- Crear cursos.
+- Asociar cursos a docentes.
+- Consultar cursos con información relacionada.
+- Actualizar o eliminar cursos.
+
+### Gestión de horarios
+- Registrar horarios para cada curso.
+- Consultar horarios disponibles.
+- Modificar horarios existentes.
+- Eliminar horarios.
+
+### Gestión de matrículas
+- Registrar matrículas de estudiantes en cursos.
+- Consultar matrículas almacenadas.
+- Actualizar datos de matrícula.
+- Eliminar registros.
+
+---
+
+
+## Modelo de datos principal
+
+La base de datos `academia` incluye las siguientes tablas principales:
+
+### `Estudiantes`
+Guarda la información básica de los estudiantes.
+
+Campos principales:
+- `id_estudiante`
+- `nombre`
+- `apellido`
+- `correo_electronico`
+- `telefono`
+
+### `Docentes`
+Almacena la información de los profesores o docentes.
+
+Campos principales:
+- `id_docente`
+- `nombre`
+- `correo_electronico`
+- `telefono`
+- `especialidad`
+
+### `Cursos`
+Registra los cursos ofertados por la academia.
+
+Campos principales:
+- `id_curso`
+- `nombre`
+- `descripcion`
+- `duracion_horas`
+- `profesor_id` o `docente_id`
+
+### `Horarios`
+Guarda la programación horaria de cada curso.
+
+Campos principales:
+- `id_horario`
+- `curso_id`
+- `dia_semana`
+- `hora_inicio`
+- `hora_fin` *(esperado por el código del controlador)*
+
+### `Matriculas`
+Relaciona estudiantes con cursos.
+
+Campos principales:
+- `id_matricula`
+- `estudiante_id`
+- `curso_id`
+- `fecha_matricula`
+
+---
+
+## Instalación y ejecución
+
+### 1. Clonar el repositorio
+```bash
+git clone <URL_DEL_REPOSITORIO>
+cd Academia
+```
+
+### 2. Crear entorno virtual
+```bash
+python -m venv venv
+```
+
+### 3. Activar entorno virtual
+En Windows:
+```bash
+venv\Scripts\activate
+```
+
+En Linux o macOS:
+```bash
+source venv/bin/activate
+```
+
+### 4. Instalar dependencias
+```bash
+pip install mysql-connector-python
+```
+
+### 5. Crear la base de datos
+Ejecuta el archivo:
+
+```sql
+queries/academia.sql
+```
+
+Esto creará la base de datos principal con sus tablas y datos de ejemplo.
+
+### 6. Configurar conexión
+Actualmente la conexión está escrita directamente en `academia/config/database.py`:
+
+```python
+host="localhost"
+user="root"
+passwd="Contraseña
+database="academia"
+port=3306
+```
+
+Debes ajustar estos valores según tu entorno de MySQL.
+
+### 7. Ejecutar el proyecto
+```bash
+python academia/main.py
+```
+
+---
+
+## Ejemplo de flujo de uso
+
+1. El usuario abre la aplicación.
+2. `main.py` crea la conexión a la base de datos.
+3. Se carga el menú principal en Tkinter.
+4. Desde la interfaz, el usuario selecciona una operación.
+5. El controlador correspondiente ejecuta la consulta SQL.
+6. Los datos obtenidos se convierten en objetos del modelo.
+7. La interfaz muestra la información actualizada.
+
+---
+
+
+- **Autor:** Leider Elian Arias Franco
+- **Programa:** Python
+- **Módulo:** Colecciones y manipulación de datos
+- **Tecnologías:** Python, Tkinter, MySQL
