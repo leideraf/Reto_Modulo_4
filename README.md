@@ -303,3 +303,4 @@ python academia/main.py
 - **Programa:** Python
 - **Módulo:** Colecciones y manipulación de datos
 - **Tecnologías:** Python, Tkinter, MySQL
+- **Video:** https://youtu.be/uJTh6pAtq-c
